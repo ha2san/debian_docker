@@ -1,0 +1,31 @@
+#!/bin/sh
+fdiff="diff_list.log"
+
+ndiff="no_diff_list.log"
+
+#create new directory "result", if directory already exists, it will be deleted
+rm -rf result
+mkdir result
+
+#look in each directory for the file and append it to diff.log
+for i in `ls -d repo/*/`
+do
+    #look if file exists
+    if [ -f $i$fdiff ]
+    then
+        #append file to diff.log
+        cat $i$fdiff >> result/$fdiff
+    fi
+    #same for diff_list_2.log
+    if [ -f $i$ndiff ]
+    then
+        cat $i$ndiff >> result/$ndiff
+    fi
+done
+
+#count the number of lines in diff_list.log
+diff_lines=`wc -l result/$fdiff | cut -d " " -f 1`
+#count the number of lines in no_diff_list.log
+no_diff_lines=`wc -l result/$ndiff | cut -d " " -f 1`
+echo "Number of lines in diff_list.log: $diff_lines"
+echo "Number of lines in no_diff_list.log: $no_diff_lines"
