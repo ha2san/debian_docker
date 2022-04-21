@@ -16,6 +16,4 @@ no_diff_list.log and diff_list.log. The first one contains the list of all the p
  
 
 issue:
-I have forked the retrowrite project in order to resolve the merge conflict, the link to the forked version is used in the Dockerfile until the conflict is resolved in the main repo.
-
 some commands in certain packages display different outputs when executed several times, due to randomness (game) or because the date is displayed

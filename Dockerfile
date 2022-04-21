@@ -17,7 +17,7 @@ RUN apt-get install clang -y
 WORKDIR /home/retro 
 
 
-RUN git clone https://github.com/ha2san/retrowrite.git /retrowrite
+RUN git clone https://github.com/HexHive/retrowrite.git /retrowrite
 RUN ln -s /retrowrite/retrowrite /usr/bin/retrowrite
 
 RUN pip install -r /retrowrite/requirements.txt
