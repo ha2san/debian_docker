@@ -26,6 +26,7 @@ for i in  $(dpkg -L $pkg | \
     log1=$(basename $i)_binary_retro.log
     $retro_binary --help >  $log1;
 
+    #maybe the log are the same but only the executable name change
     #change every occurence of binary name to match the original executable 
     original="$(basename $i)"
     instrumented="$(basename $retro_binary)"
@@ -33,9 +34,7 @@ for i in  $(dpkg -L $pkg | \
     
     #if custom and orinal are different, add filename to list
     if ! diff $log0 $log1 > /dev/null ; then
-        #maybe the log are the same but only the executable name change
         echo $i >> diff_list.log
-    
     else 
         echo $i >> no_diff_list.log
     fi
