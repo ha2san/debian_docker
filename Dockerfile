@@ -21,7 +21,6 @@ RUN git clone https://github.com/HexHive/retrowrite.git /retrowrite
 RUN ln -s /retrowrite/retrowrite /usr/bin/retrowrite
 
 RUN pip install -r /retrowrite/requirements.txt
-RUN pip install --upgrade https://github.com/angr/archinfo/tarball/master
 
 
 
