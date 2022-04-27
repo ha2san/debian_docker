@@ -2,6 +2,10 @@
 pkg="$1"
 
 echo "Docker started for $pkg"
+
+echo "git pull retrowrite"
+git -C /retrowrite/ pull
+
 cd /home/retro
 #get source code for compiling with nostrip option
 apt-get build-dep $pkg -y
@@ -17,6 +21,10 @@ for i in  $(dpkg -L $pkg | \
     log0="$(basename $i).log"
     $i --help  &> $log0; 
 
+    #store exit code in file
+    exit_code=$?
+    echo "Exit code of $i is $exit_code" >> exit_code.log
+
     echo "Running retrowrite"
     asm=${i}_instrumented.asm
     logR=$(basename $i)_retrowrite.log
@@ -30,13 +38,22 @@ for i in  $(dpkg -L $pkg | \
     log1=$(basename $i)_binary_retro.log
     $retro_binary --help &> $log1;
 
+    #store exit code in file
+    exit_code=$?
+    echo "Exit code of $retro_binary is $exit_code" >> exit_code.log
+
     #if last command was successful, then add the binary name to the list
-    if [ $? -eq 0 ]; then
+    if [ $exit_code -eq 0 ]; then
         echo "Succeed"
         echo $i >> no_diff_list.log 
     else 
         echo "Command return non-zero"
         #compare with the log of the original binary
+        #maybe the log are the same but only the executable name change
+        #change every occurence of binary name to match the original executable 
+        original="$(basename $i)"
+        instrumented="$(basename $retro_binary)"
+        sed -i "s%$instrumented%$original%g" $log1
         diff $log0 $log1 &> /dev/null
         if [ $? -eq 0 ]; then
             echo $i >> no_diff_list.log 
