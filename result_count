@@ -1,7 +1,9 @@
 #!/bin/sh
-fdiff="diff_list.log"
+fdiff="diff_error.log"
 
-ndiff="no_diff_list.log"
+ndiff="no_error.log"
+
+sdiff="same_exit_code.log"
 
 #create new directory "result", if directory already exists, it will be deleted
 rm -rf result
@@ -15,17 +17,22 @@ do
     then
         #append file to diff.log
         cat $i$fdiff >> result/$fdiff
-    fi
-    #same for diff_list_2.log
-    if [ -f $i$ndiff ]
+
+    elif [ -f $i$ndiff ]
     then
         cat $i$ndiff >> result/$ndiff
+
+    elif [ -f $i$sdiff]
+        cat $i$sdiff >> result/$ndiff
     fi
+
 done
 
 #count the number of lines in diff_list.log
 diff_lines=`wc -l result/$fdiff | cut -d " " -f 1`
 #count the number of lines in no_diff_list.log
 no_diff_lines=`wc -l result/$ndiff | cut -d " " -f 1`
-echo "Number of lines in diff_list.log: $diff_lines"
-echo "Number of lines in no_diff_list.log: $no_diff_lines"
+same_errors_lines=`wc -l result/$sdiff | cut -d " " -f 1`
+echo "Number of lines in $fdiff : $diff_lines"
+echo "Number of lines in $ndiff: $no_diff_lines"
+echo "Number of lines in $sdiff: $same_errors_lines"

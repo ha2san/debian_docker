@@ -42,7 +42,7 @@ for i in  $(dpkg -L $pkg | \
 
     #if last command was successful, then add the binary name to the list
     if [ $exit_code -eq 0 ]; then
-        echo $i >> no_diff_list.log 
+        echo $i >> no_error.log 
     else 
         echo "Command return non-zero"
         #compare with the log of the original binary
@@ -53,12 +53,12 @@ for i in  $(dpkg -L $pkg | \
         sed -i "s%$instrumented%$original%g" $log1
         diff $log0 $log1 &> /dev/null
         if [ $? -eq 0 ]; then
-            echo $i >> no_diff_list.log 
+            echo $i >> no_error.log 
         else
             if [ $exit_code_original -eq $exit_code ]; then
-                echo "$i (exit code: $exit_code)" >> diff_list.log 
+                echo "$i (exit code: $exit_code)" >> same_exit_code.log 
             else
-                echo "$i (original: $exit_code_original, retrowrite: $exit_code)" >> diff_list.log
+                echo "$i (original: $exit_code_original, retrowrite: $exit_code)" >> diff_error.log
             fi
         fi
     fi
