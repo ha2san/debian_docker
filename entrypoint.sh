@@ -56,9 +56,9 @@ for i in  $(dpkg -L $pkg | \
             echo $i >> no_diff_list.log 
         else
             if [ $exit_code_original -eq $exit_code ]; then
-                echo $i (exit code: $exit_code) >> diff_list.log 
+                echo "$i (exit code: $exit_code)" >> diff_list.log 
             else
-                echo $i (original: $exit_code_original, retrowrite: $exit_code) >> diff_list.log
+                echo "$i (original: $exit_code_original, retrowrite: $exit_code)" >> diff_list.log
             fi
         fi
     fi
