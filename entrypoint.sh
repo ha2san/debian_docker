@@ -22,8 +22,7 @@ for i in  $(dpkg -L $pkg | \
     $i --help  &> $log0; 
 
     #store exit code in file
-    exit_code=$?
-    echo "Exit code of $i is $exit_code" >> exit_code.log
+    exit_code_original=$?
 
     echo "Running retrowrite"
     asm=${i}_instrumented.asm
@@ -40,11 +39,9 @@ for i in  $(dpkg -L $pkg | \
 
     #store exit code in file
     exit_code=$?
-    echo "Exit code of $retro_binary is $exit_code" >> exit_code.log
 
     #if last command was successful, then add the binary name to the list
     if [ $exit_code -eq 0 ]; then
-        echo "Succeed"
         echo $i >> no_diff_list.log 
     else 
         echo "Command return non-zero"
@@ -58,7 +55,11 @@ for i in  $(dpkg -L $pkg | \
         if [ $? -eq 0 ]; then
             echo $i >> no_diff_list.log 
         else
-            echo $i >> diff_list.log
+            if [ $exit_code_original -eq $exit_code ]; then
+                echo $i (exit code: $exit_code) >> diff_list.log 
+            else
+                echo $i (original: $exit_code_original, retrowrite: $exit_code) >> diff_list.log
+            fi
         fi
     fi
 
