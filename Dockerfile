@@ -25,7 +25,8 @@ RUN pip install -r /retrowrite/requirements.txt
 
 
 COPY entrypoint.sh /etc/
-COPY ./filter_c++_package.sh /etc/
+COPY filter_c++_package.sh /etc/
 COPY flib /etc/
+COPY ./ListPack.tmp /home/retro/
 
 ENTRYPOINT ["/etc/entrypoint.sh"]

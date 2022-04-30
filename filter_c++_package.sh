@@ -1,8 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+
+search="implemented-in::c++"
+output="ListPack_c++"
+rm -f $output 
 
 for i in $(cat $1); do
-    apt show $i | grep implemented-in::c++ &> /dev/null
-    if [ $? -eq 0 ]; then
-        echo $i >> ListPack_c++.log
-    fi
+        if [[ $(apt show $i | grep $search) ]]; then
+                echo $i >> $output 
+        fi
 done
+
