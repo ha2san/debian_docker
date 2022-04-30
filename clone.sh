@@ -1,6 +1,6 @@
 #/bin/bash
 
-pack="./ListPack"
+pack="./ListPack_c++"
 
 while IFS= read -r pkg
 do
