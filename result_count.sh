@@ -18,12 +18,16 @@ do
         #append file to diff.log
         cat $i$fdiff >> result/$fdiff
 
-    elif [ -f $i$ndiff ]
+    fi
+
+    if [ -f $i$ndiff ]
     then
         cat $i$ndiff >> result/$ndiff
 
-    elif [ -f $i$sdiff]
-        cat $i$sdiff >> result/$ndiff
+    fi
+    if [ -f $i$sdiff ]
+    then
+        cat $i$sdiff >> result/$sdiff
     fi
 
 done
