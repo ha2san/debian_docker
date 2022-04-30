@@ -25,7 +25,7 @@ RUN pip install -r /retrowrite/requirements.txt
 
 
 COPY entrypoint.sh /etc/
+COPY ./filter_c++_package.sh /etc/
 COPY flib /etc/
 
 ENTRYPOINT ["/etc/entrypoint.sh"]
-#ENTRYPOINT ["/bin/bash"]
