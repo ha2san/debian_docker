@@ -63,7 +63,6 @@ for i in  $(dpkg -L $pkg | \
         fi
     fi
 
-    find .  -not -name '*.log' -exec rm -rf {} \;
 
 echo "entrypoint script finished"
 done
