@@ -19,7 +19,7 @@ for i in  $(dpkg -L $pkg | \
 
     echo "Running $i"
     log0="$(basename $i).log"
-    $i --help  &> $log0; 
+    timeout 1m $i --help  &> $log0; 
 
     #store exit code in file
     exit_code_original=$?
@@ -35,7 +35,7 @@ for i in  $(dpkg -L $pkg | \
 
     echo "Running instrumented $i"
     log1=$(basename $i)_binary_retro.log
-    $retro_binary --help &> $log1;
+    timeout 1m $retro_binary --help &> $log1;
 
     #store exit code in file
     exit_code=$?
