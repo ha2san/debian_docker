@@ -1,12 +1,14 @@
 #!/bin/bash
 pkg="$1"
 
-echo "Docker started for $pkg"
+echo "Started for $pkg"
 
 echo "git pull retrowrite"
-git -C /retrowrite/ pull
+git -C /home/habib/retrowrite/ pull
 
-cd /home/retro
+mkdir -p -v $pkg
+cd $pkg
+
 #get source code for compiling with nostrip option
 apt-get build-dep $pkg -y
 DEB_BUILD_OPTIONS="nostrip noopt" apt -b source $pkg 
@@ -19,7 +21,7 @@ for i in  $(dpkg -L $pkg | \
 
     echo "Running $i"
     log0="$(basename $i).log"
-    timeout 1m $i --help  &> $log0; 
+    $i --help  &> $log0; 
 
     #store exit code in file
     exit_code_original=$?
@@ -35,7 +37,7 @@ for i in  $(dpkg -L $pkg | \
 
     echo "Running instrumented $i"
     log1=$(basename $i)_binary_retro.log
-    timeout 1m $retro_binary --help &> $log1;
+    $retro_binary --help &> $log1;
 
     #store exit code in file
     exit_code=$?

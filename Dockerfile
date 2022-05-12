@@ -24,7 +24,8 @@ RUN pip install -r /retrowrite/requirements.txt
 
 
 
-COPY entrypoint.sh /etc/
-COPY flib /etc/
+#COPY scripts/entrypoint.sh /etc/
+#COPY scripts/flib.sh /etc/
+COPY scripts/* /etc/
 
 ENTRYPOINT ["/etc/entrypoint.sh"]

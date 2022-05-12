@@ -1,6 +1,13 @@
 #/bin/bash
 
-pack="./ListPack_c++"
+#if file is passed in argument, use it
+if [ $# -eq 1 ]; then
+  pack=$1
+else
+  pack="../packages/ListPack_c++"
+fi
+
+
 
 while IFS= read -r pkg
 do
@@ -24,5 +31,5 @@ do
 done < "$pack"
 
 
-docker wait $(docker ps -a -f "name=retro:" -q)
+docker wait $(docker ps -a -f "name=retro" -q)
 ./result_count.sh
