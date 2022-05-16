@@ -1,0 +1,4 @@
+docker build -t project:debian .
+docker run -it --entrypoint=/bin/bash project:debian
+ docker run -it -v "$(pwd)":/home/retro --entrypoint=/bin/bash project:debian
+
