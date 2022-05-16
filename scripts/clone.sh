@@ -15,10 +15,10 @@ do
   #check if package have a good name  [a-zA-Z0-9][a-zA-Z0-9_.-]*
   if [[ $pkg =~ ^[a-zA-Z0-9][a-zA-Z0-9_.-]*$ ]]
   then
-    name="retro:$pkg"
+    name="retro_$pkg"
     else
     #get rid of incorrect characters
-    name=$(echo retro:$pkg | sed -e 's/[^a-zA-Z0-9_.-]//g')
+    name=$(echo retro_$pkg | sed -e 's/[^a-zA-Z0-9_.-]//g')
   fi
   echo "$name"
   cd ./repo/$pkg
