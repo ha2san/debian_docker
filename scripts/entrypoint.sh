@@ -31,7 +31,8 @@ for i in  $(dpkg -L $pkg | \
 
     echo "Running clang"
     retro_binary=${i}_instrumented_binary
-    clang++ $asm -o $retro_binary $(/etc/flib.sh -f $i) 
+    clang_log=${i}_clang.log
+    clang++ $asm -o $retro_binary $(/etc/flib.sh -f $i) &> àclang_log
 
     echo "Running instrumented $i"
     log1=$(basename $i)_binary_retro.log
