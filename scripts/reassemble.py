@@ -1,3 +1,4 @@
+#!/bin/python
 import os
 import subprocess
 import argparse
@@ -39,7 +40,7 @@ def assemble(filename, outfile):
     pie = "-no-pie" if any("NOPIE" in x for x in last_lines) else "-pie"
 
     print("Assembling...")
-    asmline = f"clang++ {filename}  {pie} -nostartfiles {lflags} {wlflags} -o {outfile}"
+    asmline = f"clang++ {filename}  {pie}  {lflags} {wlflags} -o {outfile}"
     print(asmline)
     subprocess.check_output(asmline, shell=True) 
 
