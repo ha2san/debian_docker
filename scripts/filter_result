@@ -1,0 +1,43 @@
+#!/bin/sh
+
+#if no argument output error
+if [ $# -eq 0 ]; then
+    echo "No argument"
+    exit 1
+fi
+
+#output help if -h or --help
+if [ $1 = "-h" ] || [ $1 = "--help" ]; then
+    echo "Usage: filter_result.sh [FILE]"
+    echo "Filter the result of the test"
+    echo "  -h, --help      output help information"
+    exit 0
+fi
+
+#for every line in file
+for line in `cat $1`
+do
+    name=`echo $line | awk '{print $1}'`
+    original=`echo $line | awk '{print $3}' 
+    original=${original::-1}
+    retrowrite=`echo $line | awk '{print $5}'`
+    retrowrite=${retrowrite::-1}
+    print="$name $original $retrowrite"
+
+    #if the original is different than 0 or 1 or 2, add name in discard list
+    if [ $original -ne 0 ] && [ $original -ne 1 ] && [ $original -ne 2 ]; then
+        echo $print >> discard.txt
+    else 
+        #if retrowrite is 127
+        if [ $retrowrite -eq 127 ]; then
+                echo $print >> compilation_error.txt
+            fi
+        fi
+
+        #if retrowrite error is between 128 and 174, add to segfault error list
+        if [ $retrowrite -ge 128 ] && [ $retrowrite -le 174 ]; then
+            echo $print >> segfault_error.txt
+        fi
+    fi
+
+done
