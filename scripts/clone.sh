@@ -24,6 +24,7 @@ do
   cd ./repo/$pkg
   docker run --rm -d  \
     --cpus=4.0 --cpuset-cpus=0,1,2,3 -e cpuload=100 \
+    -m 12gb --memory-swap -1 \
     -v "$(pwd)":/home/retro \
     --name "$name" \
     project:debian "$pkg"
