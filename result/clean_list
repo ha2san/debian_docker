@@ -1,0 +1,11 @@
+#!/bin/sh
+
+file=$1
+
+# for all lines in compilation_error.txt, keep only the first word
+while IFS= read -r line
+do
+    echo "${line%% *}"
+done < $file > clean_list.txt
+
+mv clean_list.txt $file
