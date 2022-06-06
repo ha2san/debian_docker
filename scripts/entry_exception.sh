@@ -5,7 +5,7 @@ echo "Docker started for $pkg"
 
 
 cd /home/retro
-apt install --no-install-recommends -y $pkg 
+timeout 3m apt install --no-install-recommends -y $pkg 
 
 for i in  $(dpkg -L $pkg | \
     xargs -I {} file {} | \
