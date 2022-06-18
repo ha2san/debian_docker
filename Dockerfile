@@ -2,6 +2,7 @@ FROM debian:latest
 
 
 RUN echo "deb-src http://deb.debian.org/debian bullseye main" >> /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian-debug/ bullseye-debug main" >> /etc/apt/sources.list
 RUN echo "deb-src http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list
 RUN echo "deb-src http://deb.debian.org/debian bullseye-updates main" >> /etc/apt/sources.list
 RUN echo "deb-src http://ftp.debian.org/debian stable main contrib non-free" >> /etc/apt/sources.list
